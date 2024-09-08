@@ -12,6 +12,10 @@ export default function rootLayout() {
                 name="components/Authentication/Signup/index"
                 options={{ headerTitle: "Sign Up" }}
             />
+            <Stack.Screen
+                name="components/(tabs)"
+                options={{ headerShown:false }}
+            />
         </Stack>
     );
 }

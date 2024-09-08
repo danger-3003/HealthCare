@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 
-function Dashboard() {
+function Home() {
     return (
         <View>
-            <Text>Dashboard</Text>
+            <Text>Home</Text>
         </View>
     );
 }
 
-export default Dashboard;
+export default Home;

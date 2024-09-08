@@ -23,8 +23,8 @@ export default function Signin() {
                     router.push({
                         pathname:"../Signup/",
                     })
-                    setUser({...user,name:"",password:""});
                 },2000)
+                setUser({...user,name:"",password:""});
             }
             else if(response.data)
             {
@@ -33,8 +33,8 @@ export default function Signin() {
                     setSignIn(false);
                     router.push({
                         pathname:"../../(tabs)/",
-                    })
-                    setUser({...user,name:"",password:""});
+                    }); 
+                setUser({...user,name:"",password:""}); 
                 },1000)
             }
             else
@@ -42,7 +42,7 @@ export default function Signin() {
                 setInvalid(true);
                 setTimeout(()=>{
                     setInvalid(false);
-                },2000)
+                },2000);
             }
         })
         .catch((error)=>{console.log(error)});
@@ -90,6 +90,7 @@ export default function Signin() {
                         <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
                             <View><FontAwesomeIcon icon={faUser}/></View>
                             <TextInput
+                                value={user.name}
                                 className="text-lg text-slate-950 pl-3" 
                                 placeholder="Enter your username"
                                 onChangeText={(text) =>{setUser({...user,name:text})}}
@@ -101,6 +102,7 @@ export default function Signin() {
                         <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
                             <View><FontAwesomeIcon icon={faUnlock}/></View>
                             <TextInput
+                                value={user.password}
                                 secureTextEntry={true}
                                 className="text-lg text-slate-950 pl-3" 
                                 placeholder="Enter your username"
