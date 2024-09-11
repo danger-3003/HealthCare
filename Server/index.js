@@ -15,6 +15,9 @@ mongoose.connect(process.env.URI)
     console.log("connected");
     app.use("/user", Authentication_router);   
     app.use("/user_data", User_router); 
+    app.get("/",(req,res)=>{
+        res.send("Server is running");
+    })
 })
 .catch((err)=>{ console.log("error in connecting Mongo DB") })
 
