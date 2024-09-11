@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar, View, Text, TextInput, Pressable, TouchableWithoutFeedback} from "react-native";
+import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback} from "react-native";
 import { Link, router } from "expo-router";
 import {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -6,13 +6,18 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faUnlock } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
-export default function Signin() {
+function SigninContext() {
 
-    const [user,setUser] = useState({name:"",password:""});
+    const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
     const [noUser, setNoUser] = useState(false);
     const [signIn, setSignIn] = useState(false);
     const [invalid, setInvalid] = useState(false);
     const handleSignin =()=>{
+        user.name = user.name.trim();
+        if (user.name.trim() === "" || user.password.trim() === "") {
+            alert("Please fill all the fields");
+            return;
+        }
         axios.get(`http://192.168.1.10:3030/getUser/${user.name}?password=${encodeURIComponent(user.password)}`)
         .then((response)=>{
             if(response.data == 'No User Found')
@@ -23,8 +28,8 @@ export default function Signin() {
                     router.push({
                         pathname:"../Signup/",
                     })
-                },2000)
-                setUser({...user,name:"",password:""});
+                },2000);
+                // setUser({...user,name:"",password:""});
             }
             else if(response.data)
             {
@@ -33,9 +38,10 @@ export default function Signin() {
                     setSignIn(false);
                     router.push({
                         pathname:"../../(tabs)/",
+                        params:{userID:user.name}
                     }); 
-                setUser({...user,name:"",password:""}); 
-                },1000)
+                // setUser({...user,name:"",password:""});
+                },1000);
             }
             else
             {
@@ -90,6 +96,7 @@ export default function Signin() {
                         <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
                             <View><FontAwesomeIcon icon={faUser}/></View>
                             <TextInput
+                                keyboardAppearance="default"
                                 value={user.name}
                                 className="text-lg text-slate-950 pl-3" 
                                 placeholder="Enter your username"
@@ -102,6 +109,7 @@ export default function Signin() {
                         <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
                             <View><FontAwesomeIcon icon={faUnlock}/></View>
                             <TextInput
+                                keyboardAppearance="default"
                                 value={user.password}
                                 secureTextEntry={true}
                                 className="text-lg text-slate-950 pl-3" 
@@ -116,11 +124,11 @@ export default function Signin() {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-                <Pressable className="w-[80%]" onPress={handleSignin}>
+                <TouchableOpacity className="w-[80%]" onPress={handleSignin}>
                     <View className="bg-slate-900 w-full h-max px-5 py-3 rounded-full">
                         <Text className="text-white text-xl text-center font-bold">Sign In</Text>
                     </View>
-                </Pressable>
+                </TouchableOpacity>
                 <View className="py-2">
                     <TouchableWithoutFeedback>
                         <Text className="text-base">Didn't have an account? <Link href={'../Signup'} className="text-blue-500">Sign Up</Link></Text>
@@ -129,4 +137,10 @@ export default function Signin() {
             </View>
         </SafeAreaView>
     );
+}
+
+export default function Signin(){
+    return(
+        <SigninContext />
+    )
 }

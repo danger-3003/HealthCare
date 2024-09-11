@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "src/app/Context/User/UserContextProvider.tsx", "src/app/Context/User/UserContext.tsx", "src/app/Interfaces/(tabs)/History/index.jsx", "src/app/Interfaces/(tabs)/New_Record/index.jsx", "src/app/Interfaces/(tabs)/index.tsx", "src/app/Interfaces/(tabs)/_layout.tsx", "src/app/Interfaces/Authentication/Signin/index.tsx", "src/app/Interfaces/Authentication/Signup/index.tsx", "src/app/Interfaces/components/About/card.tsx", "src/app/Interfaces/components/About/about.tsx", "src/app/_layout.tsx", "src/app/index.tsx", "src/app/Interfaces/(tabs)/Profile/index.tsx"  ]
 }

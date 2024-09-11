@@ -19,6 +19,12 @@ export default function Signup() {
     const [userExist, setUserExist] = useState(false);
     const [signup, setSignup] = useState(false);
     const handleSignup = () => {
+        user.name = user.name.trim();
+        if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "")
+        {
+            alert("Please fill all the fields");
+            return;
+        }
         axios.post("http://192.168.1.10:3030/setUser",user)
         .then((res)=>{
             if(res.data == 'User Already Exists')
@@ -36,6 +42,9 @@ export default function Signup() {
                 setSignup(true);
                 setTimeout(()=>{
                     setSignup(false);
+                    router.push({
+                        pathname:'../../(tabs)/'
+                    })
                 },2000)
                 console.log('Sign Up ')
             }
@@ -91,6 +100,7 @@ export default function Signup() {
                             </View>
                             <TextInput
                                 value={user.name}
+                                keyboardAppearance="default"
                                 className="text-lg text-slate-950 pl-3"
                                 placeholder="Enter your username"
                                 onChangeText={(text) => {
@@ -109,9 +119,11 @@ export default function Signup() {
                             </View>
                             <TextInput
                                 value={user.email}
+                                keyboardAppearance="default"
                                 className="text-lg text-slate-950 pl-3"
                                 placeholder="Enter your email"
                                 onChangeText={(text) => {
+                                    text.trim();
                                     setUser({ ...user, email: text });
                                 }}
                             />
@@ -127,6 +139,7 @@ export default function Signup() {
                             </View>
                             <TextInput
                                 value={user.password}
+                                keyboardAppearance="default"
                                 className="text-lg text-slate-950 pl-3"
                                 secureTextEntry={true}
                                 placeholder="Enter your password"
@@ -149,13 +162,11 @@ export default function Signup() {
                         </View>
                     </Pressable>
                 </View>
-                <TouchableOpacity className="w-[80%]">
+                <TouchableOpacity className="w-[80%]" onPress={handleSignup}>
                     <View className="bg-slate-900 w-full h-max px-5 py-3 rounded-full">
-                        <Pressable onPress={handleSignup}>
-                            <Text className="text-white text-xl text-center font-bold">
-                                Sign Up
-                            </Text>
-                        </Pressable>
+                        <Text className="text-white text-xl text-center font-bold">
+                            Sign Up
+                        </Text>
                     </View>
                 </TouchableOpacity>
                 <View className="py-2">

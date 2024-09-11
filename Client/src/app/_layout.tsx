@@ -5,15 +5,15 @@ export default function rootLayout() {
         <Stack>
             <Stack.Screen name="index" options={{headerShown:false}}/>
             <Stack.Screen
-                name="components/Authentication/Signin/index"
+                name="Interfaces/Authentication/Signin/index"
                 options={{ headerTitle: "Sign In" }}
             />
             <Stack.Screen
-                name="components/Authentication/Signup/index"
+                name="Interfaces/Authentication/Signup/index"
                 options={{ headerTitle: "Sign Up" }}
             />
             <Stack.Screen
-                name="components/(tabs)"
+                name="Interfaces/(tabs)"
                 options={{ headerShown:false }}
             />
         </Stack>
