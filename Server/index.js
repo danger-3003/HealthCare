@@ -21,4 +21,4 @@ mongoose.connect("mongodb+srv://ytprogamer1213:immortalNS1213@healthcare.aamnh.m
 })
 .catch((err)=>{ console.log("error in connecting Mongo DB") })
 
-app.listen(3030);
+// app.listen(3030);
