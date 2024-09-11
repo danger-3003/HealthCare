@@ -13,7 +13,6 @@ function HomeContext() {
     useEffect(()=>{
         setValue(userID);
     },[userID]);
-    console.log(value);
     return (
         <SafeAreaView className="">
             <StatusBar barStyle={"light-content"} backgroundColor={"#000"} />

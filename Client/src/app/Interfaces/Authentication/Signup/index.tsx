@@ -25,7 +25,7 @@ export default function Signup() {
             alert("Please fill all the fields");
             return;
         }
-        axios.post("http://192.168.1.10:3030/setUser",user)
+        axios.post("http://192.168.1.10:3030/user/setUser",user)
         .then((res)=>{
             if(res.data == 'User Already Exists')
             {
@@ -43,7 +43,8 @@ export default function Signup() {
                 setTimeout(()=>{
                     setSignup(false);
                     router.push({
-                        pathname:'../../(tabs)/'
+                        pathname:'../../(tabs)/',
+                        params:{userID:user.name}
                     })
                 },2000)
                 console.log('Sign Up ')

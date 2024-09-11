@@ -18,7 +18,7 @@ function SigninContext() {
             alert("Please fill all the fields");
             return;
         }
-        axios.get(`http://192.168.1.10:3030/getUser/${user.name}?password=${encodeURIComponent(user.password)}`)
+        axios.get(`http://192.168.1.10:3030/user/${user.name}?password=${encodeURIComponent(user.password)}`)
         .then((response)=>{
             if(response.data == 'No User Found')
             {
