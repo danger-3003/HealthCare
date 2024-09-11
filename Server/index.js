@@ -15,7 +15,7 @@ mongoose.connect("mongodb+srv://ytprogamer1213:immortalNS1213@healthcare.aamnh.m
     console.log("connected");
     app.use("/user", Authentication_router);   
     app.use("/user_data", User_router); 
-    app.get("/data/",(req,res)=>{
+    app.get("/",(req,res)=>{
         res.send("Server is running");
     })
 })
