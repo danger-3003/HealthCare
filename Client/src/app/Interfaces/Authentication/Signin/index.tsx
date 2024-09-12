@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function SigninContext() {
 
-    const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
+    const [user,setUser] = useState({name:"",password:""});
     const [noUser, setNoUser] = useState(false);
     const [signIn, setSignIn] = useState(false);
     const [invalid, setInvalid] = useState(false);
@@ -18,7 +18,8 @@ function SigninContext() {
             alert("Please fill all the fields");
             return;
         }
-        axios.get(`http://192.168.1.10:3030/user/${user.name}?password=${encodeURIComponent(user.password)}`)
+        axios.get(`https://server-healthcare.vercel.app/user/${user.name}?password=${encodeURIComponent(user.password)}`)
+        // 192.168.1.10
         .then((response)=>{
             if(response.data == 'No User Found')
             {
@@ -105,7 +106,7 @@ function SigninContext() {
                         </View>
                     </View>
                     <View className="w-[80%]">
-                        <Text className="text-xl font-bold text-slate-900 py-2">Username</Text>
+                        <Text className="text-xl font-bold text-slate-900 py-2">Password</Text>
                         <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
                             <View><FontAwesomeIcon icon={faUnlock}/></View>
                             <TextInput

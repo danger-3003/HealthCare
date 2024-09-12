@@ -1,12 +1,4 @@
-import {
-    SafeAreaView,
-    View,
-    Text,
-    TouchableOpacity,
-    Pressable,
-    TextInput,
-    StatusBar,
-} from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, Pressable, TextInput, StatusBar } from "react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
@@ -25,7 +17,8 @@ export default function Signup() {
             alert("Please fill all the fields");
             return;
         }
-        axios.post("http://192.168.1.10:3030/user/setUser",user)
+        axios.post("https://server-healthcare.vercel.app/user/setUser",user)
+        // 192.168.1.10
         .then((res)=>{
             if(res.data == 'User Already Exists')
             {

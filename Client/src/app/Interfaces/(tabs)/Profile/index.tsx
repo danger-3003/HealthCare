@@ -7,7 +7,8 @@ const ProfileContext = () => {
     const {value} = useUserContext();
     const [user, setUser] = useState({});
     useEffect(()=>{
-        axios.get(`http://192.168.1.10:3030/user_data/getUser/${value}`)
+        axios.get(`https://server-healthcare.vercel.app/user_data/getUser/${value}`)
+        // 192.168.1.10
         .then((response)=>{setUser(response.data)})
         .catch((err)=>{console.log(err)});
     })
