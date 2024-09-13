@@ -19,7 +19,7 @@ const ProfileContext = () => {
         console.log(user);
         setReadOnly(true);
         setEditColor("text-slate-800");
-        axios.put(`http://192.168.1.10:3030/user_data/updateUser/${user.name}`,user)
+        axios.put(`https://server-healthcare.vercel.app/user_data/updateUser/${user.name}`,user)
         .then((res)=>{console.log(res)})
         .catch(()=>{console.log("error in uodating user")});
     }
