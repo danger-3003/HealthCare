@@ -21,6 +21,7 @@ bcrypt.genSalt(10, (err, salt) => {
     } 
     else 
     {
+        //API to push user into DB after encrypting the password
         app.post("/user/setUser", (req, res) => {
             const user_data = {
                 name: req.body.name,
@@ -65,6 +66,7 @@ bcrypt.genSalt(10, (err, salt) => {
 });
 
 // Define the /getUser/:username API endpoint
+//API to get username and password to login
 app.get("/user/:username", (req, res) => {
     user.findOne({ name: req.params.username })
     .then((response) => {
@@ -88,6 +90,7 @@ app.get("/user/:username", (req, res) => {
     });
 });
 
+//API to retrive User's data
 app.get("/user_data/getUser/:username", (req, res) => {
     user.findOne({ name: req.params.username })
     .then((response) => {
@@ -96,13 +99,12 @@ app.get("/user_data/getUser/:username", (req, res) => {
     .catch((err) => res.send(err));
 });
 
+//API to update User's data
 app.put("/user_data/updateUser/:username", (req,res)=>{
     user.findOne({name:req.params.username})
     .then((response)=>{
         if(response)
         {
-            response.name = req.body.name;
-            response.email = req.body.email;
             response.gender = req.body.gender;
             response.age = req.body.age;
             response.dob = req.body.dob;
@@ -125,6 +127,7 @@ app.put("/user_data/updateUser/:username", (req,res)=>{
     .catch(()=>{console.log("Error in finding User");})
 })
 
+//API to test server is running is or not
 app.get("/",(req,res)=>{
     res.send("Server is running");    
 })
