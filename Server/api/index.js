@@ -26,6 +26,12 @@ bcrypt.genSalt(10, (err, salt) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
+                gender:req.body.gender,
+                dob:req.body.dob,
+                age:req.body.age,
+                bloodGroup:req.body.bloodGroup,
+                height:req.body.height,
+                weight:req.body.weight,
             };
             bcrypt.hash(user_data.password, salt, (err, hash) => {
                 if (err) 
