@@ -1,16 +1,36 @@
 import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Pressable, TextInput, StatusBar } from "react-native";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faUser, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faUnlock } from "@fortawesome/free-solid-svg-icons";
-// import { RadioButton } from 'react-native-paper';
+import RadioGroup from "react-native-radio-buttons-group";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default function Signup() {
     const [user, setUser] = useState({ name: "", email: "", password: "", gender:"", dob:"", bloodGroup:"", age:"", height:"", weight:"" });
+    const [genderId, setGenderID] = useState("");
+    const [datePicker, setDatePicker] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [signup, setSignup] = useState(false);
+    const date = new Date();
+    const genderOptions = [
+        {
+            id: '1',
+            label: 'male',
+            value:'male'
+        },
+        {
+            id: '2',
+            label:'female',
+            value:'female'
+        },
+        {
+            id: '3',
+            label: 'others',
+            value:'others'
+        }]
     const handleSignup = () => {
         user.name = user.name.trim();
         if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "")
@@ -45,7 +65,7 @@ export default function Signup() {
             }
         })
         .catch((err)=>{console.log(err)})
-        setUser({...user,name:"",email:"",password:""})
+        setUser({...user,name: "", email: "", password: "", gender:"", dob:"", bloodGroup:"", age:"", height:"", weight:""})
     };
 
     return (
@@ -149,19 +169,119 @@ export default function Signup() {
                             <Text className="text-xl font-bold text-slate-900 py-2">
                                 Gender
                             </Text>
-                            <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
-                                
+                            <View className="h-max px-5">
+                                <RadioGroup 
+                                    radioButtons={genderOptions} 
+                                    onPress={(value)=>{
+                                        const option=genderOptions.find(item => item.id === value);
+                                        setUser({ ...user, gender: option.value });
+                                        setGenderID(value);
+                                    }}
+                                    selectedId={genderId}
+                                    layout="row"
+                                />
                             </View>
                         </View>
                         <View className="w-[80%]">
                             <Text className="text-xl font-bold text-slate-900 py-2">
                                 Date of Birth
                             </Text>
-                            <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
-                                
+                            <View>
+                                <Text className="h-14 px-6 py-3 bg-slate-200 rounded-full text-lg text-slate-950" onPress={()=>setDatePicker(true)}>{user.dob?user.dob:"Select your DOB"}</Text>
+                                <DateTimePickerModal
+                                    isVisible={datePicker}
+                                    mode="date"
+                                    display="spinner"
+                                    date={date}
+                                    onConfirm={(selectedDate)=>{setUser({...user,dob:selectedDate.toLocaleDateString()});setDatePicker(false)}}
+                                    onCancel={()=>setDatePicker(false)}
+                                />
                             </View>
                         </View>
-                        
+                        <View className="flex justify-start items-center flex-row w-[80%]">
+                            <View className="w-[45%] mr-7">
+                                <Text className="text-xl font-bold text-slate-900 py-2">
+                                    Blood Group
+                                </Text>
+                                <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
+                                    <View>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                    </View>
+                                    <TextInput
+                                        value={user.bloodGroup}
+                                        keyboardAppearance="default"
+                                        className="text-lg text-slate-950 pl-3"
+                                        placeholder="Group"
+                                        onChangeText={(text) => {
+                                            text.trim();
+                                            setUser({ ...user, bloodGroup: text });
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                            <View className="w-[45%]">
+                                <Text className="text-xl font-bold text-slate-900 py-2">
+                                    Age
+                                </Text>
+                                <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
+                                    <View>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                    </View>
+                                    <TextInput
+                                        value={user.age}
+                                        keyboardAppearance="default"
+                                        className="text-lg text-slate-950 pl-3"
+                                        placeholder="yrs"
+                                        onChangeText={(text) => {
+                                            text.trim();
+                                            setUser({ ...user, age: text });
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        <View className="flex justify-start items-center flex-row w-[80%]">
+                            <View className="w-[45%] mr-7">
+                                <Text className="text-xl font-bold text-slate-900 py-2">
+                                    Heigth
+                                </Text>
+                                <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
+                                    <View>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                    </View>
+                                    <TextInput
+                                        value={user.height}
+                                        keyboardAppearance="default"
+                                        className="text-lg text-slate-950 pl-3"
+                                        placeholder="in cms"
+                                        onChangeText={(text) => {
+                                            text.trim();
+                                            setUser({ ...user, height: text });
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                            <View className="w-[45%]">
+                                <Text className="text-xl font-bold text-slate-900 py-2">
+                                    Weight
+                                </Text>
+                                <View className="h-14 px-5 py-1 bg-slate-200 rounded-full text-slate-950 flex flex-row items-center justify-start">
+                                    <View>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                    </View>
+                                    <TextInput
+                                        value={user.weight}
+                                        keyboardAppearance="default"
+                                        className="text-lg text-slate-950 pl-3"
+                                        placeholder="in KGs"
+                                        onChangeText={(text) => {
+                                            text.trim();
+                                            setUser({ ...user, weight: text });
+                                        }}
+                                    />
+                                </View>
+                            </View>                        
+                        </View>
                     </View>
                     <TouchableOpacity className="w-[80%]" onPress={handleSignup}>
                         <View className="bg-slate-900 w-full h-max px-5 py-3 rounded-full">
@@ -170,7 +290,7 @@ export default function Signup() {
                             </Text>
                         </View>
                     </TouchableOpacity>
-                    <View className="py-2">
+                    <View className="py-2 mb-5">
                         <Pressable>
                             <Text className="text-base">
                                 Already have an account?{" "}
