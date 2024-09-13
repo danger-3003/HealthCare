@@ -33,7 +33,7 @@ export default function Signup() {
         }]
     const handleSignup = () => {
         user.name = user.name.trim();
-        if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "")
+        if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "" )
         {
             alert("Please fill all the fields");
             return;
@@ -61,7 +61,6 @@ export default function Signup() {
                         params:{userID:user.name}
                     })
                 },2000)
-                console.log('Sign Up ')
             }
         })
         .catch((err)=>{console.log(err)})

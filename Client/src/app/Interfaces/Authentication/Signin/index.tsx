@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function SigninContext() {
 
-    const [user,setUser] = useState({name:"",password:""});
+    const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
     const [noUser, setNoUser] = useState(false);
     const [signIn, setSignIn] = useState(false);
     const [invalid, setInvalid] = useState(false);

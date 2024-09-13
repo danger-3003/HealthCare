@@ -96,6 +96,35 @@ app.get("/user_data/getUser/:username", (req, res) => {
     .catch((err) => res.send(err));
 });
 
+app.put("/user_data/updateUser/:username", (req,res)=>{
+    user.findOne({name:req.params.username})
+    .then((response)=>{
+        if(response)
+        {
+            response.name = req.body.name;
+            response.email = req.body.email;
+            response.gender = req.body.gender;
+            response.age = req.body.age;
+            response.dob = req.body.dob;
+            response.weight = req.body.weight;
+            response.height = req.body.height;
+            response.dob = req.body.dob;
+
+            response.save()
+            .then((updatedUser)=>{
+                console.log(updatedUser);
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
+        }
+        else{
+            res.send("User Not Found");
+        }
+    })
+    .catch(()=>{console.log("Error in finding User");})
+})
+
 app.get("/",(req,res)=>{
     res.send("Server is running");    
 })
