@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Pressable, TextInput, StatusBar } from "react-native";
+import { Alert, SafeAreaView, View, Text, TouchableOpacity, ScrollView, Pressable, TextInput, StatusBar } from "react-native";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import axios from "axios";
@@ -7,14 +7,14 @@ import { faUser, faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faUnlock } from "@fortawesome/free-solid-svg-icons";
 import RadioGroup from "react-native-radio-buttons-group";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import LottieView from "lottie-react-native";
 
 export default function Signup() {
     const [user, setUser] = useState({ name: "", email: "", password: "", gender:"", dob:"", bloodGroup:"", age:"", height:"", weight:"" });
     const [genderId, setGenderID] = useState("");
     const [datePicker, setDatePicker] = useState(false);
-    const [userExist, setUserExist] = useState(false);
-    const [signup, setSignup] = useState(false);
     const date = new Date();
+    const [loading, setLoading] = useState(false);
     const genderOptions = [
         {
             id: '1',
@@ -38,30 +38,46 @@ export default function Signup() {
             alert("Please fill all the fields");
             return;
         }
+        setLoading(true);
         axios.post("https://server-healthcare.vercel.app/user/setUser",user)
         // 192.168.1.10
         .then((res)=>{
             if(res.data == 'User Already Exists')
             {
-                setUserExist(true);
-                setTimeout(()=>{
-                    setUserExist(false);
-                    router.push({
-                        pathname:'../Signin'
-                    })
-                },1000)
+                Alert.alert(
+                    "User Already Exists",
+                    "Please SignIn to continue...",
+                    [
+                        {
+                            text: "SignIn",
+                            onPress: () =>
+                                router.replace({
+                                    pathname: "../Signin",
+                                }),
+                            style: "default",
+                        },
+                    ]
+                );
             }
             else
             {
-                setSignup(true);
-                setTimeout(()=>{
-                    setSignup(false);
-                    router.push({
-                        pathname:'../../(tabs)/',
-                        params:{userID:user.name}
-                    })
-                },2000)
+                Alert.alert(
+                    "User created Successfully",
+                    "Click 'OK' to continue...",
+                    [
+                        {
+                            text: "OK",
+                            onPress: () =>
+                                router.replace({
+                                    pathname:'../../(tabs)/',
+                                    params:{userID:user.name}
+                                }),
+                            style: "default",
+                        },
+                    ]
+                );
             }
+            setLoading(false);
         })
         .catch((err)=>{console.log(err)})
         setUser({...user,name: "", email: "", password: "", gender:"", dob:"", bloodGroup:"", age:"", height:"", weight:""})
@@ -76,8 +92,20 @@ export default function Signup() {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View
                     style={{ borderBottomStartRadius: 100 }}
-                    className="bg-slate-950 w-full h-max pt-10 pb-5 px-10"
+                    className="bg-slate-950 w-full h-max pt-10 pb-5 px-10 flex items-center flex-row justify-between"
                 >
+                    {
+                        loading && 
+                        <View className="-mt-4">
+                            <LottieView 
+                                source={{uri:"https://lottie.host/ec975ba1-6fc3-44f1-acac-91938720a2d5/PF93s0yFj0.json"}}
+                                autoPlay
+                                loop
+                                speed={3}
+                                style={{height:100,width:100}}
+                            />
+                        </View>
+                    }
                     <View className="py-5">
                         <Text className="text-white text-lg text-right font-bold ml-1">
                             Create Your Account
@@ -86,22 +114,6 @@ export default function Signup() {
                             Sign Up
                         </Text>
                     </View>
-                    {
-                        userExist && 
-                        <View className="flex items-center justify-center">
-                            <View className="bg-red-400 px-5 py-3 h-max w-[80%] rounded-md absolute top-0">
-                                <Text className="text-white font-bold text-lg text-center">User Already Exists !!!</Text>
-                            </View>
-                        </View>
-                    }
-                    {
-                        signup && 
-                        <View className="flex items-center justify-center">
-                            <View className="bg-green-400 px-5 py-3 h-max w-[80%] rounded-md absolute top-0">
-                                <Text className="text-white font-bold text-lg text-center">Sign Up Successfull.</Text>
-                            </View>
-                        </View>
-                    }
                 </View>
                 <View className="flex items-center justify-center w-screen">
                     <View className="flex items-center justify-center w-full pt-10 pb-5">
