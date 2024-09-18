@@ -6,7 +6,7 @@ import axios from "axios";
 import LoadingScreen from "../../components/Loading";
 
 const ProfileContext = () => {
-    const {value} = useUserContext();
+    const {value}:any = useUserContext();
     const [user, setUser] = useState({});
     const [readOnly, setReadOnly] = useState(true);
     const [editColor, setEditColor] = useState('text-slate-800');
@@ -31,6 +31,27 @@ const ProfileContext = () => {
         router.replace({
             pathname: "../../../",
         });
+    }
+
+    const BMI= (user.weight/(Math.pow((user.height/100),2))).toFixed(2);
+    let bmiCategory = '';
+    let text_color = '';
+    if(Number(BMI) < 18.5)
+    {
+        bmiCategory = 'Underweight';
+        text_color = "text-red-400 font-bold";
+    }else if(Number(BMI) >= 18.5 && Number(BMI) < 25)
+    {
+        bmiCategory = 'Normal weight';
+        text_color = "text-green-400 font-bold";
+    }else if(Number(BMI) >= 25 && Number(BMI) < 30)
+    {
+        bmiCategory = 'Overweight';
+        text_color = "text-red-400 font-bold";
+    }else if(Number(BMI) >= 30)
+    {
+        bmiCategory = 'Obese';
+        text_color = "text-red-600 font-extrabold";
     }
 
     return (
@@ -112,6 +133,14 @@ const ProfileContext = () => {
                                     editable={!readOnly}
                                     className={`${editColor}`}
                                     onChangeText={(text)=>{setUser({...user,weight:text})}}
+                                />
+                            </View>
+                            <View className="flex items-center justify-between flex-row">
+                                <Text>BMI</Text>
+                                <TextInput 
+                                    value={`${BMI.toString()} (${bmiCategory})`}
+                                    editable={!readOnly}
+                                    className={`${text_color}`}
                                 />
                             </View>
                         </View>

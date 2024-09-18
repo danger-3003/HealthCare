@@ -4,7 +4,7 @@ import DashboardCard from "./card";
 
 const Dashboard = () => {
     return (
-        <View>
+        <View className="w-full">
             <DashboardCard />
             <DashboardCard />
             <DashboardCard />

@@ -17,9 +17,9 @@ function HomeContext() {
         <SafeAreaView className="">
             <StatusBar barStyle={"light-content"} backgroundColor={"#000"} />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View className="flex items-center justify-between flex-row bg-slate-200 rounded-3xl p-1 sm:p-2 mt-20 sm:mt-10 mx-5 ms:mx-10 shadow-xl shadow-slate-900">
-                    <View className="flex items-start justify-center">
-                        <View className="flex items-center justify-center flex-row mt-5">
+                <View className="flex items-center justify-between flex-row bg-slate-200 rounded-3xl h-40 mx-5 mt-20 p-5 shadow-xl shadow-slate-900">
+                    <View className="flex items-start justify-center w-[65%] ">
+                        <View className="flex items-center justify-center flex-row">
                             <LottieView
                                 source={{
                                     uri: "https://lottie.host/de3d759a-e65d-488c-9dcd-b27116ae5d74/Ceu5vvZjtZ.json",
@@ -28,22 +28,22 @@ function HomeContext() {
                                 autoPlay
                                 style={{ width: 30, height: 30 }}
                             />
-                            <Text className="text-2xl font-medium">
+                            <Text className="text-xl font-medium" style={{fontWeight:500}}>
                                 Hello !
                             </Text>
                         </View>
-                        <Text className="text-3xl sm:text-3xl font-extrabold ml-2">
+                        <Text className="text-2xl font-extrabold w-full" numberOfLines={2}>
                             {value}
                         </Text>
                     </View>
-                    <View className="w-32 h-36">
+                    <View className="w-[35vw] h-[35vw]">
                         <LottieView
                             source={{
                                 uri: "https://lottie.host/bc01e504-ca97-4bed-98e5-ce35ed3b2032/nHFi4Zb4wt.json",
                             }}
                             loop
                             autoPlay
-                            style={{ width: "100%", height: "100%" }}
+                            style={{ width: "100%", height: "90%", position:"absolute"}}
                         />
                     </View>
                 </View>
@@ -52,7 +52,7 @@ function HomeContext() {
                     <View className="flex items-center justify-center flex-row my-3">
                         <Services bgcolor="bg-red-200 shadow-md shadow-slate-500" />
                         <Services bgcolor="bg-blue-200 shadow-md shadow-slate-500" />
-                        <Services bgcolor="bg-green-200 shadow-md shadow-slate-500" />
+                        <Services bgcolor="bg-cyan-200 shadow-md shadow-slate-500" />
                         <Services bgcolor="bg-violet-200 shadow-md shadow-slate-500" />
                     </View>
                 </View>
@@ -61,7 +61,7 @@ function HomeContext() {
                 </View>
                 <View className=" mx-5">
                     <Text className="text-2xl font-bold">Your Dashboard</Text>
-                    <View>
+                    <View className="flex items-center justify-center">
                         <Dashboard />
                     </View>
                 </View>

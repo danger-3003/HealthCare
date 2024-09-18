@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HealthCare",
-    "slug": "HealthCare",
+    "slug": "health-care",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -33,6 +33,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "24b53ca0-2450-418e-9ceb-25a1f477e091"
+      }
+    },
+    "owner": "danger_3003"
   }
 }

@@ -4,14 +4,13 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faUnlock } from '@fortawesome/free-solid-svg-icons';
-import LoadingScreen from "../../components/Loading";
 import axios from 'axios';
 import LottieView from "lottie-react-native";
 
 function SigninContext() {
 
-    const [user,setUser] = useState({name:"",password:""});
-    // const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
+    // const [user,setUser] = useState({name:"",password:""});
+    const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
     const [loading, setLoading] = useState(false);
     const handleSignin =()=>{
         user.name = user.name.trim();

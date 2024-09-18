@@ -43,7 +43,7 @@ function Index(){
                     </View>
                     <View className="bg-white px-5 sm:px-8 py-2 sm:py-3 rounded-lg">
                         <TouchableOpacity onPress={handleGetStarted}>
-                            <Text className="text-slate-950 text-2xl sm:text-3xl font-bold sm:font-extrabold">Getting Started</Text>
+                            <Text className="text-slate-950 text-3xl" style={{fontSize:25,fontWeight:900}}>Getting Started</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
