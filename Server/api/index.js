@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require("bcryptjs");
 require('dotenv').config();
 const user = require("./model");
+const userRecord = require("./userRecord/index");
 
 const app = express();
 app.use(bodyParser.json());
@@ -131,6 +132,8 @@ app.put("/user_data/updateUser/:username", (req,res)=>{
 app.get("/",(req,res)=>{
     res.send("Server is running");    
 })
+
+app.use("/userRecord",userRecord);
 
 app.listen(3030);
 

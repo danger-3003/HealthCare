@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     age:String,
     weight:String,
     gender:String,
-    bloodGroup:String,
+    bloodGroup:String
 })
 
 

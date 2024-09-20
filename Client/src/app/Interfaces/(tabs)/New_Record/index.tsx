@@ -5,12 +5,20 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
+import axios from 'axios';
 
 const NewRecord = () => {
     const { value }:any = useUserContext();
     const [isSugar, setIsSugar] = useState(false);
-    const [userDetails, setUserDetails] = useState({bp:"",pulse:"",sugar:""});
     const date = new Date();
+    const [userRecord, setUserRecord] = useState({name:value,user:{date:date.toDateString(),bp:"",pulse:"",sugar:""}})
+
+    const handleUpload =()=>{
+        console.log(userRecord);
+        axios.post('http://192.168.1.10:3030/userRecord',userRecord)
+        .then((res)=>{console.log(res);setUserRecord({...userRecord,user:{...userRecord.user,bp:"",pulse:"",sugar:""}})})
+        .catch((err)=>{console.log(err)});
+    }
 
     return (
         <>
@@ -32,7 +40,8 @@ const NewRecord = () => {
                                 <TextInput
                                     className="my-2 text-lg w-[85%] ml-3"
                                     placeholder="Enter Blood Pressure (120/80)"
-                                    onChangeText={(text)=>{setUserDetails({...userDetails,bp:text})}}
+                                    value={userRecord.user.bp}
+                                    onChangeText={(text)=>{setUserRecord({...userRecord,user:{...userRecord.user,bp:text}})}}
                                 />
                             </View>
                         </View>
@@ -44,7 +53,8 @@ const NewRecord = () => {
                                     className="my-2 text-lg w-[85%] ml-3"
                                     placeholder="Enter Pulse rate (75 BPM)"
                                     keyboardType="decimal-pad"
-                                    onChangeText={(text)=>{setUserDetails({...userDetails,pulse:text})}}
+                                    value={userRecord.user.pulse}
+                                    onChangeText={(text)=>{setUserRecord({...userRecord,user:{...userRecord.user,pulse:text}})}}
                                 />
                             </View>
                         </View>
@@ -58,7 +68,8 @@ const NewRecord = () => {
                                         className="my-2 text-lg w-[85%] ml-3"
                                         placeholder="Enter Blood Sugar (mg/dl)"
                                         keyboardType="decimal-pad"
-                                        onChangeText={(text)=>{setUserDetails({...userDetails,sugar:text})}}
+                                        value={userRecord.user.sugar}
+                                        onChangeText={(text)=>{setUserRecord({...userRecord,user:{...userRecord.user,sugar:text}})}}
                                     />
                                 </View>
                             </View>
@@ -75,7 +86,7 @@ const NewRecord = () => {
                         }
                         
                         <TouchableOpacity className="bg-green-400 px-10 py-2 my-10 w-[70%] shadow-md shadow-green-800"
-                            onPress={()=>{console.log(userDetails)}}
+                            onPress={handleUpload}
                             style={{
                                 borderTopEndRadius:40,
                                 borderBottomStartRadius:40,
