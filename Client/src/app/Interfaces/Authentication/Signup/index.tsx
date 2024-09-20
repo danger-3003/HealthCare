@@ -243,6 +243,7 @@ export default function Signup() {
                                         keyboardAppearance="default"
                                         className="text-lg text-slate-950 pl-3"
                                         placeholder="yrs"
+                                        keyboardType="decimal-pad"
                                         onChangeText={(text) => {
                                             text.trim();
                                             setUser({ ...user, age: text });
@@ -265,6 +266,7 @@ export default function Signup() {
                                         keyboardAppearance="default"
                                         className="text-lg text-slate-950 pl-3"
                                         placeholder="in cms"
+                                        keyboardType="decimal-pad"
                                         onChangeText={(text) => {
                                             text.trim();
                                             setUser({ ...user, height: text });
@@ -285,6 +287,7 @@ export default function Signup() {
                                         keyboardAppearance="default"
                                         className="text-lg text-slate-950 pl-3"
                                         placeholder="in KGs"
+                                        keyboardType="decimal-pad"
                                         onChangeText={(text) => {
                                             text.trim();
                                             setUser({ ...user, weight: text });

@@ -1,4 +1,4 @@
-import { Text, TextInput, View } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
 import { useUserContext } from "../../../Context/User/UserContext";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ const ProfileContext = () => {
     const {value}:any = useUserContext();
     const [user, setUser] = useState({});
     const [readOnly, setReadOnly] = useState(true);
-    const [editColor, setEditColor] = useState('text-slate-800');
+    const [editColor, setEditColor] = useState('text-slate-900');
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
         axios.get(`https://server-healthcare.vercel.app/user_data/getUser/${value}`)
@@ -59,99 +59,151 @@ const ProfileContext = () => {
             {
                 loading?
                 <LoadingScreen />:
-                <View>
-                    <View className="m-5">
-                        <View className="flex items-center justify-between flex-row">
+                <ScrollView>
+                    <View className="mx-5 mt-5">
+                        <View className="bg-slate-900 h-0.5 w-full rounded-full"></View>
+                        <View className="flex items-center justify-between flex-row my-7">
                             <View>
-                                <Text className="text-3xl font-bold">{user.name} <Text className="text-slate-400">(You)</Text></Text>
+                                <Text className="text-3xl font-bold">{user.name} <Text className="text-slate-400 text-lg">(You)</Text></Text>
                                 <View className="flex flex-row">
                                     <Text className="text-lg">{user.dob}</Text>
                                     <Text className="ml-10 text-lg"><Text className="font-medium">age:</Text>{user.age}</Text>
                                 </View>
                             </View>
-                            <View className="">
-                                <Text className="text-red-500 font-extrabold text-xl" onPress={()=>{setReadOnly(false);setEditColor("text-red-500")}}>Edit</Text>
-                            </View>
                         </View>
-                        <View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Username</Text>
+                        <View className="bg-slate-900 h-0.5 w-full rounded-full"></View>
+                        <View className="my-7 w-full">
+                            <TouchableOpacity className="absolute right-0 bg-red-500 px-7 py-0.5 rounded-full shadow-md shadow-slate-900"
+                                onPress={()=>{setReadOnly(false);setEditColor("text-red-500 bg-slate-200 w-[60%]")}}
+                                style={{
+                                    borderBottomLeftRadius:40,
+                                    borderTopRightRadius:40,
+                                    borderTopStartRadius:10,
+                                    borderBottomEndRadius:10
+                                }}
+                            >
+                                <View>
+                                    <Text className="text-white font-extrabold text-xl">Edit</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View className="flex items-center justify-between flex-row mt-12">
+                                <Text className="font-bold text-lg text-slate-800">Username</Text>
                                 <TextInput 
                                     value={user.name}
                                     editable={false}
-                                    className="text-slate-400"
+                                    className="text-slate-400 text-lg font-medium"
                                 /> 
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Email</Text>
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Email</Text>
                                 <TextInput 
                                     value={user.email}
                                     editable={false}
-                                    className="text-slate-400"
+                                    className="text-slate-400 text-lg font-medium"
                                 />
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Date of Birth</Text>
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Date of Birth</Text>
                                 <TextInput 
                                     value={user.dob}
                                     editable={!readOnly}
-                                    className={`${editColor}`}
+                                    className={`${editColor} text-lg font-medium`}
                                     onChangeText={(text)=>{setUser({...user,dob:text})}}
                                 />
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Age (yrs)</Text>
-                                <TextInput 
-                                    value={user.age}
-                                    editable={!readOnly}
-                                    className={`${editColor}`}
-                                    onChangeText={(text)=>{setUser({...user,age:text})}}
-                                />
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Age (yrs)</Text>
+                                <View className="flex flex-row justify-end">
+                                    <TextInput 
+                                        value={user.age}
+                                        editable={!readOnly}
+                                        keyboardType="decimal-pad"
+                                        className={`${editColor} text-lg font-medium`}
+                                        onChangeText={(text)=>{setUser({...user,age:text})}}
+                                    />
+                                    <Text className="text-lg font-medium"> Yrs</Text>
+                                </View>
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Blood Group</Text>
-                                <TextInput 
-                                    value={user.bloodGroup}
-                                    editable={!readOnly}
-                                    className={`${editColor}`}
-                                    onChangeText={(text)=>{setUser({...user,bloodGroup:text})}}
-                                />
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Blood Group</Text>
+                                <View className="flex flex-row justify-end">
+                                    <TextInput 
+                                        value={user.bloodGroup}
+                                        editable={!readOnly}
+                                        className={`${editColor} text-lg font-medium`}
+                                        onChangeText={(text)=>{setUser({...user,bloodGroup:text})}}
+                                    />
+                                    <Text className="text-lg font-medium"> ve</Text>
+                                </View>
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Height (cms)</Text>
-                                <TextInput 
-                                    value={user.height}
-                                    editable={!readOnly}
-                                    className={`${editColor}`}
-                                    onChangeText={(text)=>{setUser({...user,height:text})}}
-                                />
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Height (cms)</Text>
+                                <View className="flex flex-row justify-end">
+                                    <TextInput 
+                                        value={user.height}
+                                        editable={!readOnly}
+                                        keyboardType="decimal-pad"
+                                        className={`${editColor} text-lg font-medium`}
+                                        onChangeText={(text)=>{setUser({...user,height:text})}}
+                                    />
+                                    <Text className="text-lg font-medium"> cms</Text>
+                                </View>
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>Weight (KG)</Text>
-                                <TextInput 
-                                    value={user.weight}
-                                    editable={!readOnly}
-                                    className={`${editColor}`}
-                                    onChangeText={(text)=>{setUser({...user,weight:text})}}
-                                />
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">Weight (KG)</Text>
+                                <View className="flex flex-row justify-end">
+                                    <TextInput 
+                                        value={user.weight}
+                                        editable={!readOnly}
+                                        keyboardType="decimal-pad"
+                                        className={`${editColor} text-lg font-medium`}
+                                        onChangeText={(text)=>{setUser({...user,weight:text})}}
+                                    />
+                                    <Text className="text-lg font-medium"> Kg</Text>
+                                </View>
                             </View>
-                            <View className="flex items-center justify-between flex-row">
-                                <Text>BMI</Text>
+                            <View className="flex items-center justify-between flex-row my-2">
+                                <Text className="font-bold text-lg text-slate-800">BMI</Text>
                                 <TextInput 
                                     value={`${BMI.toString()} (${bmiCategory})`}
-                                    editable={!readOnly}
-                                    className={`${text_color}`}
+                                    editable={false}
+                                    className={`${text_color} text-lg font-medium`}
                                 />
                             </View>
+                            <View className="flex items-end">
+                                {!readOnly &&
+                                <TouchableOpacity  className=" bg-green-500 px-6 py-0.5 shadow-md shadow-slate-900 my-5"
+                                    onPress={handleSave}
+                                    style={{
+                                        borderBottomLeftRadius:40,
+                                        borderTopRightRadius:40,
+                                        borderTopStartRadius:10,
+                                        borderBottomEndRadius:10
+                                    }}
+                                    >
+                                    <View>
+                                        <Text className="text-white font-extrabold text-xl">Save</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                }
+                            </View>
                         </View>
-                        {!readOnly &&
-                            <Text className="text-green-600 font-extrabold text-xl text-right mt-2" onPress={handleSave}>Save</Text>
-                        }
+                        <View className="bg-slate-900 h-0.5 w-full rounded-full -mt-4"></View>
                     </View>
-                    <View>
-                        <Text onPress={handleLogOut}>Log Out</Text>
-                    </View>
-                </View>
+                    <TouchableOpacity className="bg-red-500 p-3 m-5 shadow-md shadow-slate-700"
+                        onPress={handleLogOut}
+                        style={{
+                            borderBottomLeftRadius:40,
+                            borderTopRightRadius:40,
+                            borderTopStartRadius:10,
+                            borderBottomEndRadius:10
+                        }}
+                        >
+                        <View>
+                            <Text className="text-white font-extrabold text-xl text-center">Log Out !!!</Text>
+                        </View>
+                    </TouchableOpacity>
+                </ScrollView>
             }
         </>
     );
