@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express.Router();
@@ -16,7 +15,7 @@ app.post("/",(req,res)=>{
         if(response)
         {
             if(response.user.some((item) => item.date=== userData.user.date)){
-                res.send("Already Entered")
+                res.send("Already Entered");
             }
             else{
                 response.user.push(userData.user);
@@ -31,7 +30,18 @@ app.post("/",(req,res)=>{
             .catch(()=>{res.send("Error in entering a record")});
         }
     })
-    .catch(()=>{res.send("Error in entering a record")})
+    .catch(()=>{res.send("Error in entering a record");})
+})
+
+app.get("/data/:userName",(req,res)=>{
+    const userName = req.params.userName;
+    userRecord.findOne({name:userName})
+    .then((data)=>{res.send(data.user)})
+    .catch((err)=>{console.log(err)});
+})
+
+app.get("/",(req,res)=>{
+    res.send("Server is running");
 })
 
 module.exports = app;

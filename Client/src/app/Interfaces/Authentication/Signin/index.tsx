@@ -125,7 +125,15 @@ function SigninContext() {
                         </TouchableWithoutFeedback> */}
                     </View>
                     <TouchableOpacity className="w-[80%] mt-2" onPress={handleSignin}>
-                        <View className="bg-slate-900 w-full h-max px-5 py-3 rounded-full">
+                        <View 
+                            className="bg-slate-900 w-full h-max px-5 py-3"
+                            style={{
+                                borderTopEndRadius:40,
+                                borderBottomStartRadius:40,
+                                borderBottomEndRadius:10,
+                                borderTopLeftRadius:10
+                            }}
+                        >
                             <Text className="text-white text-xl text-center font-bold">Sign In</Text>
                         </View>
                     </TouchableOpacity>

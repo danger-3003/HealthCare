@@ -1,9 +1,10 @@
-import {View, Text, TextInput, ScrollView, SafeAreaView, Pressable, TouchableOpacity, Modal} from "react-native";
+import {View, Text, TextInput, ScrollView, SafeAreaView, Pressable, TouchableOpacity, Alert} from "react-native";
 import { useUserContext } from "../../../Context/User/UserContext";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from "react";
 import {Calendar} from "react-native-calendars";
 import axios from 'axios';
@@ -17,9 +18,40 @@ const NewRecord = () => {
 
     const handleUpload =()=>{
         console.log(userRecord);
-        axios.post('http://192.168.1.10:3030/userRecord', userRecord)
-        // axios.post('https://server-healthcare.vercel.app/userRecord',userRecord)
-        .then((res)=>{console.log(res.data)})
+        // axios.post('http://192.168.1.10:3030/userRecord', userRecord)
+        axios.post('https://server-healthcare.vercel.app/userRecord',userRecord)
+        .then((res)=>{
+            if(res.data === "Uploaded Record")
+            {
+                Alert.alert(
+                    "Record Uploaded",
+                    "Record has been uploaded successfully",
+                    [{
+                        text:"OK"
+                    }]
+                )
+            }
+            else if(res.data === "Already Entered")
+            {
+                Alert.alert(
+                    "Record Already Entered",
+                    "Record has already been entered for this date",
+                    [{
+                        text:"OK"
+                    }]
+                )
+            }
+            else
+            {
+                Alert.alert(
+                    "Error",
+                    "Error in uploading the record",
+                    [{
+                        text:"OK"
+                    }]
+                )
+            }
+        })
         .catch((err)=>{console.log(err)});
         setUserRecord({...userRecord,user:{...userRecord.user,view:"",date:"",bp:"",pulse:"",sugar:""}});
     }
@@ -40,8 +72,8 @@ const NewRecord = () => {
                         <View className="w-[90%]">
                             <Text className="font-semibold text-slate-900 text-xl">Date</Text>
                             <View className="bg-slate-200 px-5 py-1 mt-3 mb-4 rounded-full flex items-center justify-start flex-row">
-                                {/* <FontAwesome5 name="heartbeat" size={24} color="red" /> */}
-                                <Text className="my-2 text-lg w-[85%] ml-3" onPress={()=>{setCalendar(true)}}>
+                                <AntDesign name="calendar" size={24} color="blue" />
+                                <Text className="my-2 text-lg w-[85%] ml-3 text-slate-600" onPress={()=>{setCalendar(true)}}>
                                     {userRecord.user.date?userRecord.user.date:"Select Date"}
                                 </Text>
                             </View>
