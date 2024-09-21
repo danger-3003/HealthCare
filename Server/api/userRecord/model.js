@@ -3,6 +3,7 @@ const userRecord = mongoose.Schema({
     name:String,
     user:[
         {
+            view:String,
             date:String,
             bp:String,
             sugar:Number,

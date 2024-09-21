@@ -1,29 +1,33 @@
-import {View, Text, TextInput, ScrollView, SafeAreaView, Pressable, TouchableOpacity} from "react-native";
+import {View, Text, TextInput, ScrollView, SafeAreaView, Pressable, TouchableOpacity, Modal} from "react-native";
 import { useUserContext } from "../../../Context/User/UserContext";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
+import {Calendar} from "react-native-calendars";
 import axios from 'axios';
 
 const NewRecord = () => {
     const { value }:any = useUserContext();
     const [isSugar, setIsSugar] = useState(false);
+    const [calendar, setCalendar] = useState(false);
     const date = new Date();
-    const [userRecord, setUserRecord] = useState({name:value,user:{date:date.toDateString(),bp:"",pulse:"",sugar:""}})
+    const [userRecord, setUserRecord] = useState({name:value,user:{view:"",date:"",bp:"",pulse:"",sugar:""}})
 
     const handleUpload =()=>{
         console.log(userRecord);
-        axios.post('http://192.168.1.10:3030/userRecord',userRecord)
-        .then((res)=>{console.log(res);setUserRecord({...userRecord,user:{...userRecord.user,bp:"",pulse:"",sugar:""}})})
+        axios.post('http://192.168.1.10:3030/userRecord', userRecord)
+        // axios.post('https://server-healthcare.vercel.app/userRecord',userRecord)
+        .then((res)=>{console.log(res.data)})
         .catch((err)=>{console.log(err)});
+        setUserRecord({...userRecord,user:{...userRecord.user,view:"",date:"",bp:"",pulse:"",sugar:""}});
     }
 
     return (
         <>
             <SafeAreaView className="mt-20">
-                <ScrollView className="mx-5">
+                <ScrollView className="mx-5" showsVerticalScrollIndicator={false}>
                     <View className="flex items-center justify-between flex-row mb-5">
                         <View>
                             <Text className="text-3xl font-extrabold uppercase mt-16">New Record</Text>
@@ -33,6 +37,26 @@ const NewRecord = () => {
                     </View>
                     <View className="bg-slate-900 w-full rounded-full" style={{height:2.5}}></View>
                     <View className="flex items-center justify-center w-full my-6">
+                        <View className="w-[90%]">
+                            <Text className="font-semibold text-slate-900 text-xl">Date</Text>
+                            <View className="bg-slate-200 px-5 py-1 mt-3 mb-4 rounded-full flex items-center justify-start flex-row">
+                                {/* <FontAwesome5 name="heartbeat" size={24} color="red" /> */}
+                                <Text className="my-2 text-lg w-[85%] ml-3" onPress={()=>{setCalendar(true)}}>
+                                    {userRecord.user.date?userRecord.user.date:"Select Date"}
+                                </Text>
+                            </View>
+                            {
+                                calendar &&
+                                <Calendar
+                                    maxDate={new Date().toDateString()}
+                                    onDayPress={(day: any)=>{
+                                        setUserRecord((prevState)=>({...prevState,user:{...prevState.user,date:day.dateString,view:day.day+"/"+day.month}}));
+                                        setCalendar(false);
+                                    }}
+                                    className="w-[80vw] py-3 px-5 mb-5 shadow-md rounded-xl shadow-slate-800"
+                                />
+                            }
+                        </View>
                         <View className="w-[90%]">
                             <Text className="font-semibold text-slate-900 text-xl">Blood Pressure</Text>
                             <View className="bg-slate-200 px-5 py-1 my-3 rounded-full flex items-center justify-start flex-row">
