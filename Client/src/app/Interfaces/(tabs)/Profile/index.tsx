@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingScreen from "../../components/Loading";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Feather from '@expo/vector-icons/Feather';
 
 const ProfileContext = () => {
     const {value}:any = useUserContext();
@@ -84,7 +86,7 @@ const ProfileContext = () => {
                                 }}
                             >
                                 <View>
-                                    <Text className="text-white font-extrabold text-xl">Edit</Text>
+                                    <Text className="text-white font-extrabold text-xl">Edit {" "}<FontAwesome5 name="user-edit" size={18} color="white" /></Text>
                                 </View>
                             </TouchableOpacity>
                             <View className="flex items-center justify-between flex-row mt-12">
@@ -183,7 +185,7 @@ const ProfileContext = () => {
                                     }}
                                     >
                                     <View>
-                                        <Text className="text-white font-extrabold text-xl">Save</Text>
+                                        <Text className="text-white font-extrabold text-xl">Save {" "}<Feather name="upload" size={22} color="white" /></Text>
                                     </View>
                                 </TouchableOpacity>
                                 }
