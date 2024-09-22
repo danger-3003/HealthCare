@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingScreen from "../../components/Loading";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const ProfileContext = () => {
     const {value}:any = useUserContext();
@@ -200,7 +201,7 @@ const ProfileContext = () => {
                         }}
                         >
                         <View>
-                            <Text className="text-white font-extrabold text-xl text-center">Log Out !!!</Text>
+                            <Text className="text-white font-extrabold text-xl text-center">Log Out <MaterialCommunityIcons name="logout" size={24} color="white" /></Text>
                         </View>
                     </TouchableOpacity>
                 </ScrollView>

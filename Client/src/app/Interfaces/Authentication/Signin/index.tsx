@@ -62,7 +62,19 @@ function SigninContext() {
             }
             setLoading(false);
         })
-        .catch((error)=>{console.log(error)});
+        .catch((error)=>{
+            setLoading(false);
+            Alert.alert(
+                "Error",
+                "Please SignIn again",
+                [
+                    {
+                        text:"ok",
+                        style:"default"
+                    }
+                ]
+            )
+        });
     }
     return (
         <>
