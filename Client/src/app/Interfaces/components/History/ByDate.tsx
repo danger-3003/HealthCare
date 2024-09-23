@@ -23,8 +23,8 @@ const ByDate = (props: any) => {
                             <View className="flex flex-row bg-slate-300 py-3 px-6 rounded-xl my-2 shadow-sm shadow-slate-900">
                                 <Text className="text-[#142850] text-lg w-28 text-center">{FIND.date}</Text>
                                 <Text className="text-[#142850] text-lg w-36 text-center">{FIND.bp}</Text>
-                                <Text className="text-[#142850] text-lg w-40 text-center">{FIND.sugar} mg/dl</Text>
-                                <Text className="text-[#142850] text-lg w-20 text-center">{FIND.pulse} BPS</Text>
+                                <Text className="text-[#142850] text-lg w-40 text-center">{FIND.sugar} mg/dL</Text>
+                                <Text className="text-[#142850] text-lg w-20 text-center">{FIND.pulse} BPM</Text>
                             </View>
                         </View>
                     </View>

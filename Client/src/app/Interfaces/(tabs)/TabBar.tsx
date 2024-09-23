@@ -16,7 +16,7 @@ const TabBar = ({ state, descriptors, navigation }:any) => {
     }
 
     return (
-        <View className="bg-white flex items-center justify-around flex-row absolute bottom-3 rounded-full mx-5 py-2 px-5 shadow-sm shadow-slate-800">
+        <View className="bg-white flex items-center justify-around flex-row relative bottom-3 rounded-full mx-5 py-2 px-5 shadow-sm shadow-slate-800">
             {state.routes.map((route:any, index:any) => {
                 const { options } = descriptors[route.key];
                 const label =
