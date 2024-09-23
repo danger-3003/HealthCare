@@ -9,8 +9,8 @@ import LottieView from "lottie-react-native";
 
 function SigninContext() {
 
-    // const [user,setUser] = useState({name:"",password:""});
-    const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
+    const [user,setUser] = useState({name:"",password:""});
+    // const [user,setUser] = useState({name:"Sumanth Narem",password:"123456789"});
     const [loading, setLoading] = useState(false);
     const handleSignin =()=>{
         user.name = user.name.trim();

@@ -49,6 +49,17 @@ app.get("/data/:userName",(req,res)=>{
     .catch((err)=>{res.send("Error")});
 })
 
+//API to delete Specific Record
+app.delete("/data/delete/:username/:date",(req,res)=>{
+    const username = req.params.username;
+    const date = req.params.date;
+    userRecord.updateOne(
+        {name:username},
+        {$pull:{user:{date:date}}}
+    ).then((response)=>{res.send("Record Deleted")})
+    .catch(()=>{res.send("Error in deleting Record")});
+})
+
 app.get("/",(req,res)=>{
     res.send("Server is running");
 })

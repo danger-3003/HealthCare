@@ -7,6 +7,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import ByDate from "../../components/History/ByDate";
 import { Calendar } from "react-native-calendars";
 import Entypo from '@expo/vector-icons/Entypo';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const History = () => {
     const {value}:any=useUserContext();
@@ -17,7 +18,7 @@ const History = () => {
     useEffect(()=>{
         axios.get('https://server-healthcare.vercel.app/userRecord/data/'+value)
         .then((res)=>{
-            setData(res.data);
+            setData(res.data.reverse());
             setLoading(false);
         }) 
         .catch((err)=>{
@@ -30,6 +31,27 @@ const History = () => {
             )
         })
     });
+
+    const handleDelete=(date:any)=>{
+        Alert.alert(
+            "Delete Record",
+            "Are you sure you want to delete this record?",
+            [
+                {
+                    text: "ok",
+                    onPress:()=>{
+                        axios.delete('http://192.168.1.10:3030/userRecord/data/delete/'+value+"/"+date)
+                        .then(()=>{true})
+                        .catch(()=>{false})
+                    }
+                },
+                {
+                    text:"cancel"
+                }
+            ]
+        )
+    }
+
     const renderItem =({item}:any)=>{
         return(
             <View className="flex flex-row bg-slate-300 py-3 rounded-xl my-2 shadow-sm shadow-slate-900 mx-3">
@@ -43,6 +65,9 @@ const History = () => {
                 <Text className="text-[#142850] text-lg w-20 text-center">
                     {item.pulse} BPM
                 </Text>
+                <View className="mx-5">
+                    <MaterialIcons name="delete" size={28} color="red" onPress={()=>handleDelete(item.date)}/>
+                </View>
             </View>
         )
     }
@@ -78,10 +103,10 @@ const History = () => {
                                         {date && <ByDate data={data} date={date} />}
                                     </View>
                                 </View>
-                                <View className="mt-5">
-                                    <Text className="text-lg font-semibold">Sort By</Text>
+                                <View className="mt-5 ml-4">
+                                    <Text className="text-lg font-bold">Your Records</Text>
                                 </View>
-                                <ScrollView horizontal={true} showsVerticalScrollIndicator={true} className="w-full h-max mt-2">
+                                <ScrollView horizontal={true} showsVerticalScrollIndicator={true} className="w-full h-max mt-2 mb-20">
                                     <View className="flex items-center justify-around flex-col w-full">
                                         <View className="px-3">
                                             <View className="flex justify-around items-center flex-row bg-[#142850] w-full py-3 px-6 rounded-xl my-2 shadow-lg shadow-slate-900">
@@ -89,6 +114,7 @@ const History = () => {
                                                 <Text className="text-white font-extrabold text-xl w-36 text-center">Blood Pressure</Text>
                                                 <Text className="text-white font-extrabold text-xl w-40 text-center">Blood Sugar</Text>
                                                 <Text className="text-white font-extrabold text-xl w-20 text-center">Pulse</Text>
+                                                <Text className="text-white font-extrabold text-xl w-10 text-center">{" "} </Text>
                                             </View>
                                         </View>
                                         <FlatList 

@@ -33,7 +33,7 @@ export default function Signup() {
         }]
     const handleSignup = () => {
         user.name = user.name.trim();
-        if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "" )
+        if (user.name.trim() === "" || user.password.trim() === "" || user.email.trim() === "" || user.dob.trim()==="" || user.age.trim()==="" || user.bloodGroup.trim()==="" || user.height.trim()==="" || user.age.trim()==="" || user.weight.trim()==="")
         {
             alert("Please fill all the fields");
             return;
