@@ -2,21 +2,23 @@ import { Text, View, StatusBar, SafeAreaView, ScrollView } from "react-native";
 import LottieView from "lottie-react-native";
 import Services from "../components/Services/services";
 import About from "../components/About/about";
-import Dashboard from "../components/Dashboard/dashboard";
+import Dashboard from "../components/Dashboard/Dashboard";
 import { useLocalSearchParams } from "expo-router";
 import { useUserContext } from "../../Context/User/UserContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingScreen from "../components/Loading";
+import Entypo from "@expo/vector-icons/Entypo";
 
 function HomeContext() {
     const {userID} = useLocalSearchParams();
     const {value, setValue}:any = useUserContext();
     const [data,setData]:any = useState([]);
     const [loading, setLoading] = useState(true);
+    console.log(data.length);
     useEffect(()=>{
         axios.get("https://server-healthcare.vercel.app/userRecord/data/"+userID)
-        .then((res)=>{setData(res.data);setLoading(false)})
+        .then((res)=>{setData(res.data);setLoading(false);console.log(res.data)})
         .catch(()=>{alert("Error in Getting User Record")});
     },[]);
     useEffect(()=>{
@@ -61,7 +63,11 @@ function HomeContext() {
                     <View className="my-5 mx-5">
                         <Text className="text-2xl font-bold">Services</Text>
                         <View className="flex items-center justify-center flex-row my-3">
-                            <Services data={data}/>
+                            {
+                                data.length>0?
+                                <Services data={data}/>
+                                :<View className="w-full"><Text className="text-red-600 text-xl font-bold text-center">No Record Found <Entypo name="emoji-sad" size={24} color="#dc2626" /></Text></View>
+                            }
                         </View>
                     </View>
                     <View className="w-full">

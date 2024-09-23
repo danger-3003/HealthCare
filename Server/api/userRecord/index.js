@@ -44,7 +44,7 @@ app.get("/data/:userName",(req,res)=>{
         {
             res.send(data.user)
         }
-        else{res.send("No Record Found");}
+        else{res.send([]);}
     })
     .catch((err)=>{res.send("Error")});
 })
