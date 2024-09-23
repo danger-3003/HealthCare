@@ -15,12 +15,11 @@ function HomeContext() {
     const {value, setValue}:any = useUserContext();
     const [data,setData]:any = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log(data.length);
     useEffect(()=>{
         axios.get("https://server-healthcare.vercel.app/userRecord/data/"+userID)
-        .then((res)=>{setData(res.data);setLoading(false);console.log(res.data)})
+        .then((res)=>{setData(res.data);setLoading(false)})
         .catch(()=>{alert("Error in Getting User Record")});
-    },[]);
+    });
     useEffect(()=>{
         setValue(userID);
     },[userID]);

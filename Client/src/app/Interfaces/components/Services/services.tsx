@@ -11,15 +11,15 @@ const services = (props:any) => {
     let totalSys=0;
     let totalDys=0;
     let bp=[];
-    // props.data.length>0?
-    // props.data.map((item:any)=>{
-    //     bp=item.bp.split("/");
-    //     totalSys+=Number(bp[0]);
-    //     totalDys+=Number(bp[1]);
-    //     totalSugar+=item.sugar;
-    //     totalPulse+=item.pulse;
-    // })
-    // :console.log("No Records Found");
+    props.data.length>0?
+    props.data.map((item:any)=>{
+        bp=item.bp.split("/");
+        totalSys+=Number(bp[0]);
+        totalDys+=Number(bp[1]);
+        totalSugar+=item.sugar;
+        totalPulse+=item.pulse;
+    })
+    :console.log("No Records Found");
 
     return (
         <>
