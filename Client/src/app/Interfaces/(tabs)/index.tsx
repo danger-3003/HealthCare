@@ -5,11 +5,18 @@ import About from "../components/About/about";
 import Dashboard from "../components/Dashboard/dashboard";
 import { useLocalSearchParams } from "expo-router";
 import { useUserContext } from "../../Context/User/UserContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function HomeContext() {
     const {userID} = useLocalSearchParams();
-    const {value, setValue} = useUserContext();
+    const {value, setValue}:any = useUserContext();
+    const [data,setData]:any = useState([]);
+    useEffect(()=>{
+        axios.get("https://server-healthcare.vercel.app/userRecord/data/"+userID)
+        .then((res)=>{setData(res.data)})
+        .catch(()=>{alert("Error in Getting User Record")});
+    },[]);
     useEffect(()=>{
         setValue(userID);
     },[userID]);
@@ -50,10 +57,7 @@ function HomeContext() {
                 <View className="my-5 mx-5">
                     <Text className="text-2xl font-bold">Services</Text>
                     <View className="flex items-center justify-center flex-row my-3">
-                        <Services bgcolor="bg-red-200 shadow-md shadow-slate-500" />
-                        <Services bgcolor="bg-blue-200 shadow-md shadow-slate-500" />
-                        <Services bgcolor="bg-cyan-200 shadow-md shadow-slate-500" />
-                        <Services bgcolor="bg-violet-200 shadow-md shadow-slate-500" />
+                        <Services data={data}/>
                     </View>
                 </View>
                 <View className="w-full">
@@ -62,7 +66,7 @@ function HomeContext() {
                 <View className=" mx-5">
                     <Text className="text-2xl font-bold">Your Dashboard</Text>
                     <View className="flex items-center justify-center">
-                        <Dashboard />
+                        <Dashboard data={data}/>
                     </View>
                 </View>
             </ScrollView>

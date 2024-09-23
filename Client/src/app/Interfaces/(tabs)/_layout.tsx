@@ -10,6 +10,7 @@ const TabsLayout = () => {
     return (
         <UserProvider>
             <Tabs tabBar={props=> <TabBar {...props} />}>
+            {/* <Tabs> */}
                 <Tabs.Screen name="index" options={{ tabBarLabel: "Home", headerShown:false, tabBarIcon:()=><AntDesign name="home" size={22} color="black" /> }} />
                 <Tabs.Screen
                     name="New_Record/index"

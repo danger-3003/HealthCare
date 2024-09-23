@@ -17,9 +17,12 @@ const NewRecord = () => {
     const [userRecord, setUserRecord] = useState({name:value,user:{view:"",date:"",bp:"",pulse:"",sugar:""}})
 
     const handleUpload =()=>{
-        console.log(userRecord);
+        if(userRecord.user.date.trim()==="" || userRecord.user.view.trim()==="" || userRecord.user.bp.trim()==="" || userRecord.user.pulse.trim()==="")
+        {
+            alert("Please fill all the fields");
+        }
         // axios.post('http://192.168.1.10:3030/userRecord', userRecord)
-        axios.post('https://server-healthcare.vercel.app/userRecord',userRecord)
+        else{axios.post('https://server-healthcare.vercel.app/userRecord',userRecord)
         .then((res)=>{
             if(res.data === "Uploaded Record")
             {
@@ -53,7 +56,7 @@ const NewRecord = () => {
             }
         })
         .catch((err)=>{console.log(err)});
-        setUserRecord({...userRecord,user:{...userRecord.user,view:"",date:"",bp:"",pulse:"",sugar:""}});
+        setUserRecord({...userRecord,user:{...userRecord.user,view:"",date:"",bp:"",pulse:"",sugar:""}});}
     }
 
     return (

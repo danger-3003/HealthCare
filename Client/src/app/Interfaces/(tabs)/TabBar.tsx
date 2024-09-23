@@ -50,6 +50,7 @@ const TabBar = ({ state, descriptors, navigation }:any) => {
 
                 return (
                     <TouchableOpacity
+                        key={route.key}
                         accessibilityRole="button"
                         accessibilityState={isFocused ? { selected: true } : {}}
                         accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -58,7 +59,7 @@ const TabBar = ({ state, descriptors, navigation }:any) => {
                         onLongPress={onLongPress}
                         className="flex-1 items-center justify-end h-12 relative"
                     >
-                        <View className={`${isFocused?`bg-[${primary}] scale-125 -top-5  shadow-md shadow-slate-600`:'bg-none -top-1'} h-10 w-10 rounded-full absolute flex items-center justify-center`}>
+                        <View className={`${isFocused?`scale-125 -top-5 shadow-md shadow-slate-600`:'bg-none -top-1'} h-10 w-10 rounded-full absolute flex items-center justify-center`} style={{backgroundColor:isFocused?primary:"transparent"}}>
                             {
                                 icons[route.name]({
                                     color: isFocused? "#fff": primary

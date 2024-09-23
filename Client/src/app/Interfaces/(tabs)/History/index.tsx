@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, FlatList } from "react-native";
+import { ScrollView, Text, View, FlatList, Alert } from "react-native";
 import { useUserContext } from "@/src/app/Context/User/UserContext";
 import {useEffect, useState} from "react";
 import LoadingScreen from "../../components/Loading";
@@ -19,7 +19,15 @@ const History = () => {
             setData(res.data);
             setLoading(false);
         }) 
-        .catch((err)=>{console.log(err)})
+        .catch((err)=>{
+            Alert.alert(
+                "Error",
+                "Error in getting user Record",
+                [{
+                    text: "OK",
+                }]
+            )
+        })
     },[]);
     const renderItem =({item}:any)=>{
         return(
@@ -62,7 +70,7 @@ const History = () => {
                                     className="w-[80vw] py-3 px-5 mb-5 shadow-md rounded-xl shadow-slate-800"
                                 />
                             }
-                            {date && <ByDate data ={data} date={date} />}
+                            {date && <ByDate data={data} date={date} />}
                         </View>
                     </View>
                     <View>
