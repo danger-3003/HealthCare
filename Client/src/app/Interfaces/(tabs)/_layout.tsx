@@ -4,11 +4,12 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { UserProvider } from "../../Context/User/UserContext";
+import TabBar from "./TabBar";
 
 const TabsLayout = () => {
     return (
         <UserProvider>
-            <Tabs>
+            <Tabs tabBar={props=> <TabBar {...props} />}>
                 <Tabs.Screen name="index" options={{ tabBarLabel: "Home", headerShown:false, tabBarIcon:()=><AntDesign name="home" size={22} color="black" /> }} />
                 <Tabs.Screen
                     name="New_Record/index"

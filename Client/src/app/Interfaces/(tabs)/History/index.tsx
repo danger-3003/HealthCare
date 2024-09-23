@@ -27,15 +27,12 @@ const History = () => {
                 <Text className="text-[#142850] text-lg w-28 text-center ml-5">{item.date}</Text>
                 <Text className="text-[#142850] text-lg w-36 text-center">
                     {item.bp}
-                    120/80
                 </Text>
                 <Text className="text-[#142850] text-lg w-40 text-center">
                     {item.sugar}
-                    130 mg/dl
                 </Text>
                 <Text className="text-[#142850] text-lg w-20 text-center">
-                    {/* {item.pulse} */}
-                    120 BPS
+                    {item.pulse}
                 </Text>
             </View>
         )
