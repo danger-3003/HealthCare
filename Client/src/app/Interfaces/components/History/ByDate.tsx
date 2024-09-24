@@ -6,7 +6,8 @@ const ByDate = (props: any) => {
     const data=props.data;
     const FIND = data.find((FIND:any)=>FIND.date === props.date);
     let BP=[];
-    BP = FIND.bp.split("/");
+    FIND?BP = FIND.bp.split("/"):BP=[];
+
     return (
         <View>
             {

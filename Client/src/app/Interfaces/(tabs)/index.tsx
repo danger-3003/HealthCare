@@ -61,10 +61,6 @@ function HomeContext() {
                     <View className=" mx-5 mt-5 mb-20">
                         <Text className="text-2xl font-bold mb-2">Your Dashboard</Text>
                         <Text className="text-lg">Your latest records.</Text>
-                        <View className="flex flex-row justify-end">
-                            <View className="flex flex-row items-center"><View className="bg-blue-600 h-3 w-3"></View><Text className="text-blue-600">{" "}Low BP</Text></View>
-                            <View className="flex flex-row items-center mx-2"><View className="bg-red-600 h-3 w-3"></View><Text className="text-red-600">{" "}Alert</Text></View>
-                        </View>
                         <View className="flex items-center justify-center">
                             <Dashboard user={userID}/>
                         </View>
