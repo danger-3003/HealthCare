@@ -19,7 +19,7 @@ const services = (props:any) => {
             else setNoData(true);
         })
         .catch(()=>{alert("Error in Getting User Record")});
-    },[])
+    })
     let totalSugar=0;
     let totalPulse=0;
     let totalSys=0;
