@@ -19,7 +19,7 @@ const services = (props:any) => {
             else setNoData(true);
         })
         .catch(()=>{alert("Error in Getting User Record")});
-    },[])
+    })
     let totalSugar=0;
     let totalPulse=0;
     let totalSys=0;
@@ -50,8 +50,8 @@ const services = (props:any) => {
                     </Text>
                 </View>:
                 <>
-                    <Card text={`${(totalSys/data.length).toFixed(1)}/${(totalDys/data.length).toFixed(1)}`} bg="bg-red-300" size="17" color="mt-4 text-slate-700" icon={<FontAwesome5 name="heartbeat" size={24} color="red" />} heading="BP" headColor="text-red-700"/>
-                    <Card text={(totalPulse/data.length).toFixed(1)} bg="bg-cyan-300" color="text-slate-700" size="20" icon={<Fontisto name="heartbeat-alt" size={24} color="#172554" />} heading="Pulse" headColor="text-cyan-700"/>
+                    <Card text={`${(totalSys/data.length).toFixed(0)}/${(totalDys/data.length).toFixed(0)}`} bg="bg-red-300" size="17" color="mt-4 text-slate-700" icon={<FontAwesome5 name="heartbeat" size={24} color="red" />} heading="BP" headColor="text-red-700"/>
+                    <Card text={(totalPulse/data.length).toFixed(0)} bg="bg-cyan-300" color="text-slate-700" size="20" icon={<Fontisto name="heartbeat-alt" size={24} color="#172554" />} heading="Pulse" headColor="text-cyan-700"/>
                     <Card text={(totalSugar/(data.length-count)).toFixed(1)} bg="bg-green-300" color="text-slate-700" size="20" icon={<MaterialCommunityIcons name="diabetes" size={24} color="green" />} heading="Sugar" headColor="text-green-700"/>
                 </>
             }
