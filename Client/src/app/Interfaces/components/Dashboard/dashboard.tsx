@@ -1,58 +1,92 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import { CartesianChart, CartesianChartProvider, Bar } from "victory-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import Entypo from "@expo/vector-icons/Entypo";
+import axios from 'axios';
+import { useState } from "react";
+import LoadingScreen from "../Loading";
 
-const DashboardCard = (props:any) => {
-    const [data,setData]:any=useState([]);
+const Dashboard = (props:any) => {
+    const [data,setData]=useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(()=>{
-        setData(props.data);
-    });
-    let sys:any = [];
-    let dys:any = [];
-    let view:any = [];
-    let sugar:any = [];
-    let pulse:any = [];
-    let Bp:any = [];
-    data.map((item:any)=>{
-        Bp=item.bp.split("/");
-        sys.push(Bp[0]);
-        dys.push(Bp[1]);
-        view.push(item.view);
-        sugar.push(item.sugar);
-        pulse.push(item.pulse);
+        axios.get("https://server-healthcare.vercel.app/userRecord/data/"+props.user)
+        //axios.get("http://192.168.1.10:3030/userRecord/data/"+userID)
+        .then((res)=>{
+            setData(res.data.reverse());
+            setLoading(false)
+        })
+        .catch(()=>{alert("Error in Getting User Record")});
     })
 
-    const barData = [
-        { x: 'Jan', y: 30 },
-        { x: 'Feb', y: 50 },
-        { x: 'Mar', y: 75 },
-        { x: 'Apr', y: 100 },
-        { x: 'May', y: 60 },
-      ];
-
-      const BarData = sugar.map((item, index) => ({
-        x: view[index], // x should be assigned first
-        y: item
-    }));
-
-    return (
-        <View className="flex items-center justify-center bg-slate-200 w-full h-56 my-3 rounded-3xl shadow-lg shadow-zinc-300">
-            <Text>Victory Bar Chart</Text>
-            <View className="h-20 w-20">
-                <CartesianChartProvider>
-                    <Bar
-                        data={BarData}
-                        x="x"
-                        y="y"
-                        style={{
-                            data: { fill: "red", strokeWidth: 1, stroke: "black" },
-                        }}
-                        cornerRadius={{ topLeft: 10, topRight: 10 }}
-                    />
-                </CartesianChartProvider>
+    const renderItem =({item}:any)=>{
+        let BP=[];
+        BP = item.bp.split("/");
+        return(
+            <View className="flex flex-row bg-[#cbe5eb] py-3 rounded-xl my-2 shadow-sm shadow-slate-900 mx-3">
+                <Text className="text-[#142850] text-lg w-28 text-center ml-5">{item.date}</Text>
+                <Text className={`${BP[0]>140 ||BP[1]>90?"text-red-600":`${BP[0]<100 || BP[1]<70?"text-blue-600":"text-[#142850]"}`} text-lg w-36 text-center`}>
+                    {item.bp}
+                </Text>
+                <Text className={`${item.sugar>170?"text-red-600":"text-[#142850]"} text-lg w-40 text-center`}>
+                    {item.sugar?item.sugar+"mg/dL":"- -"}
+                </Text>
+                <Text className={`${item.pulse>100||item.pulse<60?"text-red-600":"text-[#142850]"} text-lg w-20 text-center`}>
+                    {item.pulse} BPM
+                </Text>
             </View>
-        </View>
+        )
+    }
+    return (
+        <>
+            {
+                loading?
+                <LoadingScreen />
+                :<>
+                    {
+                        data.length > 0 ? (
+                            <ScrollView
+                                horizontal={true}
+                                showsVerticalScrollIndicator={true}
+                                className="w-full h-max"
+                            >
+                                <View className="flex items-center justify-around flex-col w-full">
+                                    <View className="px-3">
+                                        <View className="flex justify-around items-center flex-row bg-[#142850] w-full py-3 px-6 rounded-xl my-2 shadow-lg shadow-slate-900">
+                                            <Text className="text-white font-extrabold text-xl w-28 text-center">
+                                                Date
+                                            </Text>
+                                            <Text className="text-white font-extrabold text-xl w-36 text-center">
+                                                Blood Pressure
+                                            </Text>
+                                            <Text className="text-white font-extrabold text-xl w-40 text-center">
+                                                Blood Sugar
+                                            </Text>
+                                            <Text className="text-white font-extrabold text-xl w-20 text-center">
+                                                Pulse
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    <FlatList
+                                        className="w-full"
+                                        data={data.slice(0, 4)}
+                                        renderItem={renderItem}
+                                        keyExtractor={(item: any, index) => index.toString()}
+                                    />
+                                </View>
+                            </ScrollView>
+                        ) : (
+                            <View className="w-full">
+                                <Text className="text-red-600 text-xl font-bold text-center">
+                                    No Record Found{" "}
+                                    <Entypo name="emoji-sad" size={24} color="#dc2626" />
+                                </Text>
+                            </View>
+                        )
+                    }
+                </>
+            }
+        </>
     );
 };
 
-export default DashboardCard;
+export default Dashboard;

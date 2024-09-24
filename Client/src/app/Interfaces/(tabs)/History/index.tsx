@@ -40,9 +40,9 @@ const History = () => {
                 {
                     text: "ok",
                     onPress:()=>{
-                        axios.delete('http://192.168.1.10:3030/userRecord/data/delete/'+value+"/"+date)
-                        .then(()=>{true})
-                        .catch(()=>{false})
+                        axios.delete('https://server-healthcare.vercel.app/userRecord/data/delete/'+value+"/"+date)
+                        .then(()=>{console.log(true)})
+                        .catch(()=>{console.log(false)})
                     }
                 },
                 {
@@ -53,20 +53,22 @@ const History = () => {
     }
 
     const renderItem =({item}:any)=>{
+        let BP=[];
+        BP = item.bp.split("/");
         return(
-            <View className="flex flex-row bg-slate-300 py-3 rounded-xl my-2 shadow-sm shadow-slate-900 mx-3">
+            <View className="flex flex-row bg-[#cbe5eb] py-3 rounded-xl my-2 shadow-sm shadow-slate-900 mx-3">
                 <Text className="text-[#142850] text-lg w-28 text-center ml-5">{item.date}</Text>
-                <Text className="text-[#142850] text-lg w-36 text-center">
+                <Text className={`${BP[0]>140 ||BP[1]>90?"text-red-600":`${BP[0]<100 || BP[1]<70?"text-blue-600":"text-[#142850]"}`} text-lg w-36 text-center`}>
                     {item.bp}
                 </Text>
-                <Text className="text-[#142850] text-lg w-40 text-center">
-                    {item.sugar} mg/dL
+                <Text className={`${item.sugar>170?"text-red-600":"text-[#142850]"} text-lg w-40 text-center`}>
+                    {item.sugar?item.sugar+"mg/dL":"- -"}
                 </Text>
-                <Text className="text-[#142850] text-lg w-20 text-center">
+                <Text className={`${item.pulse>100||item.pulse<60?"text-red-600":"text-[#142850]"} text-lg w-20 text-center`}>
                     {item.pulse} BPM
                 </Text>
                 <View className="mx-5">
-                    <MaterialIcons name="delete" size={28} color="red" onPress={()=>handleDelete(item.date)}/>
+                    <MaterialIcons name="delete" size={28} color="#ef4444" onPress={()=>handleDelete(item.date)}/>
                 </View>
             </View>
         )
@@ -106,7 +108,11 @@ const History = () => {
                                 <View className="mt-5 ml-4">
                                     <Text className="text-lg font-bold">Your Records</Text>
                                 </View>
-                                <ScrollView horizontal={true} showsVerticalScrollIndicator={true} className="w-full h-max mt-2 mb-20">
+                                <View className="flex flex-row justify-end">
+                                    <View className="flex flex-row items-center"><View className="bg-blue-600 h-3 w-3"></View><Text className="text-blue-600">{" "}Low BP</Text></View>
+                                    <View className="flex flex-row items-center mx-2"><View className="bg-red-600 h-3 w-3"></View><Text className="text-red-600">{" "}Alert</Text></View>
+                                </View>
+                                <ScrollView horizontal={true} showsVerticalScrollIndicator={true} className="w-full h-max mb-20">
                                     <View className="flex items-center justify-around flex-col w-full">
                                         <View className="px-3">
                                             <View className="flex justify-around items-center flex-row bg-[#142850] w-full py-3 px-6 rounded-xl my-2 shadow-lg shadow-slate-900">

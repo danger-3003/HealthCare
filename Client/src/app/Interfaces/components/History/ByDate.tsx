@@ -4,15 +4,17 @@ import React from "react";
 
 const ByDate = (props: any) => {
     const data=props.data;
-    const FIND = data.find((item:any)=>item.date === props.date);
+    const FIND = data.find((FIND:any)=>FIND.date === props.date);
+    let BP=[];
+    BP = FIND.bp.split("/");
     return (
         <View>
             {
                 FIND?
                 <ScrollView horizontal={true} showsVerticalScrollIndicator={true} className="w-full h-max">
-                    <View className="flex items-center justify-around flex-col w-full">
+                    <View className="flex FINDs-center justify-around flex-col w-full">
                         <View className="">
-                            <View className="flex justify-around items-center flex-row bg-[#142850] w-full py-3 px-6 rounded-xl my-2 shadow-sm shadow-slate-900">
+                            <View className="flex justify-around FINDs-center flex-row bg-[#142850] w-full py-3 px-6 rounded-xl my-2 shadow-sm shadow-slate-900">
                                 <Text className="text-white font-extrabold text-xl w-28 text-center">Date</Text>
                                 <Text className="text-white font-extrabold text-xl w-36 text-center">Blood Pressure</Text>
                                 <Text className="text-white font-extrabold text-xl w-40 text-center">Blood Sugar</Text>
@@ -21,10 +23,16 @@ const ByDate = (props: any) => {
                         </View>
                         <View className="">
                             <View className="flex flex-row bg-slate-300 py-3 px-6 rounded-xl my-2 shadow-sm shadow-slate-900">
-                                <Text className="text-[#142850] text-lg w-28 text-center">{FIND.date}</Text>
-                                <Text className="text-[#142850] text-lg w-36 text-center">{FIND.bp}</Text>
-                                <Text className="text-[#142850] text-lg w-40 text-center">{FIND.sugar} mg/dL</Text>
-                                <Text className="text-[#142850] text-lg w-20 text-center">{FIND.pulse} BPM</Text>
+                            <Text className="text-[#142850] text-lg w-28 text-center ml-5">{FIND.date}</Text>
+                                <Text className={`${BP[0]>140 ||BP[1]>90?"text-red-600":`${BP[0]<100 || BP[1]<70?"text-blue-600":"text-[#142850]"}`} text-lg w-36 text-center`}>
+                                    {FIND.bp}
+                                </Text>
+                                <Text className={`${FIND.sugar>170?"text-red-600":"text-[#142850]"} text-lg w-40 text-center`}>
+                                    {FIND.sugar?FIND.sugar+"mg/dL":"- -"}
+                                </Text>
+                                <Text className={`${FIND.pulse>100||FIND.pulse<60?"text-red-600":"text-[#142850]"} text-lg w-20 text-center`}>
+                                    {FIND.pulse} BPM
+                                </Text>
                             </View>
                         </View>
                     </View>
