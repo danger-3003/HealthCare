@@ -38,11 +38,16 @@ app.post("/",(req,res)=>{
 //API to GET user Health Record
 app.get("/data/:userName",(req,res)=>{
     const userName = req.params.userName;
+    // userRecord.find({}).sort({"user.date":1});
     userRecord.findOne({name:userName})
     .then((data)=>{
         if(data)
         {
-            res.send(data.user)
+            data.user.sort((a, b) => {
+                return new Date(a.date) - new Date(b.date);
+              });
+            // console.log(new Date(data.user[0].date));
+            res.send(data.user);
         }
         else{res.send([]);}
     })
